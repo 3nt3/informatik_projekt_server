@@ -13,6 +13,8 @@ var state GameState = GameState{[9]int{0, 0, 0, 0, 0, 0, 0, 0, 0}}
 func GetState(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("\n=== GET  REQUEST ===")
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "https://snap.berkeley.edu")
+
 	_ = json.NewEncoder(w).Encode(state.cells)
 
 	for i, cell := range state.cells {
