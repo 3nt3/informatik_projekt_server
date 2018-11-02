@@ -14,6 +14,28 @@ func GetState(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("\n=== GET  REQUEST ===")
 	w.Header().Set("Content-Type", "application/json")
 	_ = json.NewEncoder(w).Encode(state.cells)
+
+	for i, cell := range state.cells {
+		if math.Mod(float64(i)+1.0, 3.0) == 0 {
+			switch cell {
+			case 0:
+				fmt.Println("- ")
+			case 1:
+				fmt.Println("X ")
+			case 2:
+				fmt.Println("O ")
+			}
+		} else {
+			switch cell {
+			case 0:
+				fmt.Print("- ")
+			case 1:
+				fmt.Print("X ")
+			case 2:
+				fmt.Print("O ")
+			}
+		}
+	}
 }
 
 func UpdateState(w http.ResponseWriter, r *http.Request) {
