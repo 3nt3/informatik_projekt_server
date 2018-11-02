@@ -18,8 +18,7 @@ func GetState(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateState(w http.ResponseWriter, r *http.Request) {
-	i := 0
-	bar := pb.StartNew(i)
+	bar := pb.StartNew(9)
 
 	var data [9]int
 	_ = json.NewDecoder(r.Body).Decode(&data)
