@@ -13,5 +13,5 @@ func main() {
 	r.HandleFunc("/tictactoe/getState", api.GetState).Methods("GET")
 	r.HandleFunc("/tictactoe/updateState", api.UpdateState).Methods("POST")
 
-	go log.Fatal(http.ListenAndServeTLS())
+	go log.Fatal(http.ListenAndServe(":80", r))
 }
