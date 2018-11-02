@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 	"net/http"
 )
 
@@ -15,7 +16,33 @@ func GetState(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateState(w http.ResponseWriter, r *http.Request) {
-	var data GameState
+	var data [9]int
 	_ = json.NewDecoder(r.Body).Decode(&data)
-	fmt.Println(data)
+	state.cells = data
+	//fmt.Println(state)
+
+
+	for i, cell := range state.cells {
+		if math.Mod(float64(i)+1.0, 3.0) == 0 {
+			switch cell {
+			case 0:
+				fmt.Println("- ")
+			case 1:
+				fmt.Println("X ")
+			case 2:
+				fmt.Println("O ")
+			}
+		} else {
+			switch cell {
+			case 0:
+				fmt.Print("- ")
+			case 1:
+				fmt.Print("X ")
+			case 2:
+				fmt.Print("O ")
+			}
+		}
+	}
+	fmt.Println("")
+
 }
