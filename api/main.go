@@ -3,7 +3,6 @@ package api
 import (
 	"encoding/json"
 	"fmt"
-	"gopkg.in/cheggaaa/pb.v1"
 	"math"
 	"net/http"
 )
@@ -18,7 +17,6 @@ func GetState(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateState(w http.ResponseWriter, r *http.Request) {
-	bar := pb.StartNew(9)
 
 	var data [9]int
 	_ = json.NewDecoder(r.Body).Decode(&data)
@@ -45,7 +43,6 @@ func UpdateState(w http.ResponseWriter, r *http.Request) {
 				fmt.Print("O ")
 			}
 		}
-		bar.Increment()
 	}
 	fmt.Println("")
 
