@@ -10,8 +10,9 @@ import (
 func main() {
 	r := mux.NewRouter()
 
-	r.HandleFunc("/tictactoe/getState/{id}", api.GetState).Methods("GET")
-	r.HandleFunc("/tictactoe/updateState", api.UpdateState).Methods("POST")
+	r.HandleFunc("/tictactoe/{roomId}/getState/{cellId}", api.GetState).Methods("GET")
+	r.HandleFunc("/tictactoe/{roomId}/updateState", api.UpdateState).Methods("POST")
+	r.HandleFunc("/tictactoe/createRoom", api.CreateRoom).Methods("POST")
 
-	go log.Fatal(http.ListenAndServe(":8000", r))
+	go log.Fatal(http.ListenAndServe(":8080", r))
 }

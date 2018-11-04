@@ -4,55 +4,60 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
-	"math"
 	"net/http"
 	"strconv"
 )
 
 // Global vars
-var state GameState = GameState{[9]int{0, 0, 0, 0, 0, 0, 0, 0, 0}}
+var Rooms []Room
+var Players []Player
 
 func GetState(w http.ResponseWriter, r *http.Request) {
 	// fmt.Println("\n=== GET  REQUEST ===")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "https://snap.berkeley.edu")
 
-	params := mux.Vars(r)
+	roomId, _ := strconv.Atoi(mux.Vars(r)["roomId"])
+	cellId, _ := strconv.Atoi(mux.Vars(r)["cellId"])
 
-	cell, _ := strconv.Atoi(params["id"])
-	fmt.Printf("GET Cell %d: %d\n", cell, state.cells[cell])
+	room := Rooms[roomId]
+	cell := room.state.cells[cellId]
 
-	_ = json.NewEncoder(w).Encode(state.cells[cell])
+	fmt.Println(Rooms)
+	fmt.Printf("Get state (room %d, cell %d): %d\n", room.id, cellId, cell)
+
+	_ = json.NewEncoder(w).Encode(cell)
 }
 
 func UpdateState(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "https://snap.berkeley.edu")
+	roomId, _ := strconv.Atoi(mux.Vars(r)["roomId"])
 
-	var data [9]int
+	var state []int
+	_ = json.NewDecoder(r.Body).Decode(&state)
+
+	Rooms[roomId].state = GameState{state}
+	fmt.Printf("==> Actual state: %d\n\n", Rooms[roomId].state)
+}
+
+// Create room
+func CreateRoom(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "https://snap.berkeley.edu")
+	var data []string
 	_ = json.NewDecoder(r.Body).Decode(&data)
-	state.cells = data
-	fmt.Println("\n===  POST REQUEST  ===")
 
-	for i, cell := range state.cells {
-		if math.Mod(float64(i)+1.0, 3.0) == 0 {
-			switch cell {
-			case 0:
-				fmt.Println("- ")
-			case 1:
-				fmt.Println("X ")
-			case 2:
-				fmt.Println("O ")
-			}
-		} else {
-			switch cell {
-			case 0:
-				fmt.Print("- ")
-			case 1:
-				fmt.Print("X ")
-			case 2:
-				fmt.Print("O ")
-			}
-		}
+	PlayersInRoom := []Player{Player{len(Players), data[0]}, Player{len(Players) + 1, data[1]}}
+
+	room := Room{len(Rooms), PlayersInRoom, GameState{[]int{0, 0, 0, 0, 0, 0, 0, 0, 0}}}
+	Rooms = append(Rooms, room)
+	fmt.Println(Rooms)
+	for _, player := range PlayersInRoom {
+		Players = append(Players, player)
 	}
-	fmt.Println("")
 
+	fmt.Printf("New room: %v\n", room)
+
+	json.NewEncoder(w).Encode(room.id)
 }
