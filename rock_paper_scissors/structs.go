@@ -8,7 +8,8 @@ type room struct {
 
 // The player type
 type player struct {
-	id    int
-	name  string
-	score int
+	id     int
+	name   string
+	score  int
+	figure int
 }
