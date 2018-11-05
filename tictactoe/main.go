@@ -1,4 +1,4 @@
-package api
+package tictactoe
 
 import (
 	"encoding/json"
@@ -9,8 +9,8 @@ import (
 )
 
 // Global vars
-var Rooms []Room
-var Players []Player
+var rooms []room
+var players []player
 
 func GetState(w http.ResponseWriter, r *http.Request) {
 	// fmt.Println("\n=== GET  REQUEST ===")
@@ -20,10 +20,10 @@ func GetState(w http.ResponseWriter, r *http.Request) {
 	roomId, _ := strconv.Atoi(mux.Vars(r)["roomId"])
 	cellId, _ := strconv.Atoi(mux.Vars(r)["cellId"])
 
-	room := Rooms[roomId]
+	room := rooms[roomId]
 	cell := room.state.cells[cellId]
 
-	fmt.Println(Rooms)
+	fmt.Println(rooms)
 	fmt.Printf("Get state (room %d, cell %d): %d\n", room.id, cellId, cell)
 
 	_ = json.NewEncoder(w).Encode(cell)
@@ -37,8 +37,8 @@ func UpdateState(w http.ResponseWriter, r *http.Request) {
 	var state []int
 	_ = json.NewDecoder(r.Body).Decode(&state)
 
-	Rooms[roomId].state = GameState{state}
-	fmt.Printf("==> Actual state: %d\n\n", Rooms[roomId].state)
+	rooms[roomId].state = gameState{state}
+	fmt.Printf("==> Actual state: %d\n\n", rooms[roomId].state)
 }
 
 // Create room
@@ -48,13 +48,13 @@ func CreateRoom(w http.ResponseWriter, r *http.Request) {
 	var data []string
 	_ = json.NewDecoder(r.Body).Decode(&data)
 
-	PlayersInRoom := []Player{Player{len(Players), data[0]}, Player{len(Players) + 1, data[1]}}
+	playersInRoom := []player{player{len(players), data[0]}, player{len(players) + 1, data[1]}}
 
-	room := Room{len(Rooms), PlayersInRoom, GameState{[]int{0, 0, 0, 0, 0, 0, 0, 0, 0}}}
-	Rooms = append(Rooms, room)
-	fmt.Println(Rooms)
-	for _, player := range PlayersInRoom {
-		Players = append(Players, player)
+	room := room{len(rooms), playersInRoom, gameState{[]int{0, 0, 0, 0, 0, 0, 0, 0, 0}}}
+	rooms = append(rooms, room)
+	fmt.Println(rooms)
+	for _, player := range playersInRoom {
+		players = append(players, player)
 	}
 
 	fmt.Printf("New room: %v\n", room)
