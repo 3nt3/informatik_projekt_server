@@ -2,9 +2,9 @@
 package main
 
 import (
+	"./rock_paper_scissors"
+	"./tictactoe"
 	"github.com/gorilla/mux"
-	"informatik_projekt_server/rock_paper_scissors"
-	"informatik_projekt_server/tictactoe"
 	"log"
 	"net/http"
 )
