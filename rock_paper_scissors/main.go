@@ -1,5 +1,4 @@
-// This is the "rock-paper-scissors" part of the API.
-// It is used to handle rps requests
+// Handle rock paper scissors requests
 package rock_paper_scissors
 
 import (

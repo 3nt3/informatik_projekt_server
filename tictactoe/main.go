@@ -1,3 +1,4 @@
+// Handle tic tac toe requests
 package tictactoe
 
 import (
