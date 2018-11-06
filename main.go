@@ -3,8 +3,8 @@ package main
 
 import (
 	"github.com/gorilla/mux"
-	"informatik_projekt/rock_paper_scissors"
-	"informatik_projekt/tictactoe"
+	"informatik_projekt_server/rock_paper_scissors"
+	"informatik_projekt_server/tictactoe"
 	"log"
 	"net/http"
 )
