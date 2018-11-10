@@ -49,7 +49,7 @@ func CreateRoom(w http.ResponseWriter, r *http.Request) {
 	var data []string
 	_ = json.NewDecoder(r.Body).Decode(&data)
 
-	playersInRoom := []player{player{len(players), data[0]}, player{len(players) + 1, data[1]}}
+	playersInRoom := []player{{len(players), data[0]}, {len(players) + 1, data[1]}}
 
 	room := room{len(rooms), playersInRoom, gameState{[]int{0, 0, 0, 0, 0, 0, 0, 0, 0}}}
 	rooms = append(rooms, room)
@@ -58,7 +58,7 @@ func CreateRoom(w http.ResponseWriter, r *http.Request) {
 		players = append(players, player)
 	}
 
-	fmt.Printf("New room: %v\n", room)
+	fmt.Printf("New room: %v %v\n", room, playersInRoom)
 
 	json.NewEncoder(w).Encode(room.id)
 }
