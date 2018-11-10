@@ -1,3 +1,8 @@
+<<<<<<< HEAD
 tests/**
 .idea/**
 minigames.pem
+=======
+test/**
+.idea/**
+>>>>>>> 81eada86070cbefebace51691bb25e8da00431f9

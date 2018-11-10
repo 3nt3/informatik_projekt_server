@@ -2,23 +2,23 @@
 package main
 
 import (
-	"./rock_paper_scissors"
-	"./tictactoe"
+	"informatik_projekt_server/rock_paper_scissors"
+	"informatik_projekt_server/tictactoe"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 )
 
 func main() {
-	r := mux.NewRouter()
 
+	r := mux.NewRouter()	
 	// tic-tac-toe section
 	r.HandleFunc("/tictactoe/{roomId}/getState/{cellId}", tictactoe.GetState).Methods("GET")
 	r.HandleFunc("/tictactoe/{roomId}/updateState", tictactoe.UpdateState).Methods("POST")
-	r.HandleFunc("/tictactoe/createRoom", tictactoe.CreateRoom).Methods("POST")
-
+	r.HandleFunc("/tictactoe/createRoom", tictactoe.CreateRoom).Methods("POST")	
 	// rock-paper-scissors section (experimental)
 	r.HandleFunc("/rps/{roomId}/getScores", rock_paper_scissors.GetScores).Methods("GET")
+	r.HandleFunc("/rps/{roomId}/updateScore/{playerId}", rock_paper_scissors.updateScore).Methods("POST")
 	r.HandleFunc("/rps/{roomId}/postFig/{playerId}", rock_paper_scissors.PostFigure).Methods("POST")
 	r.HandleFunc("/rps/{roomId}/getFigs", rock_paper_scissors.GetFigures).Methods("GET")
 	r.HandleFunc("/rps/createRoom", rock_paper_scissors.CreateRoom).Methods("POST")

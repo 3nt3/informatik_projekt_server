@@ -32,6 +32,7 @@ func CreateRoom(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// ich bin keine biene ich bin niels ich kann auf diesem thikpad schreiben. ich mag snap! nicht.
 /*
 Post a figure (rock, paper or scissors)
 The chosen figure is encoded like this:
@@ -76,5 +77,25 @@ func GetScores(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode(scores)
 
+<<<<<<< HEAD
 	log.Println("GetScores")
+=======
+	log.Printf("GET scores of room %d\n", roomId)
+>>>>>>> 81eada86070cbefebace51691bb25e8da00431f9
+}
+
+// Update score
+func updateScore(w http.ResponseWriter, r *http.Request) {
+	roomId, _ := strconv.Atoi(mux.Vars(r)["roomId"])
+	playerId, _ := strconv.Atoi(mux.Vars(r)["playerId"])
+
+	var currentRoom room = rooms[roomId]
+	var score int
+	_ = json.NewDecoder(r.Body).Decode(&score)
+
+	currentRoom.players[playerId].score = scoreb
+}
+
+func testConn(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Decode("Oh my god! It works!!!!!")
 }
