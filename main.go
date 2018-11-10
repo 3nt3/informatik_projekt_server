@@ -16,9 +16,12 @@ func main() {
 	r.HandleFunc("/tictactoe/{roomId}/getState/{cellId}", tictactoe.GetState).Methods("GET")
 	r.HandleFunc("/tictactoe/{roomId}/updateState", tictactoe.UpdateState).Methods("POST")
 	r.HandleFunc("/tictactoe/createRoom", tictactoe.CreateRoom).Methods("POST")	
-	// rock-paper-scissors section (experimental)
+	r.HandleFunc("/tictactoe/{roomId}/getScores", tictactoe.GetScores).Methods("GET")
+	r.HandleFunc("/tictactoe/{roomId/updateScore/{playerId}", tictactoe.UpdateScore).Methods("POST")
+
+	// rock-paper-scissors section
 	r.HandleFunc("/rps/{roomId}/getScores", rock_paper_scissors.GetScores).Methods("GET")
-	r.HandleFunc("/rps/{roomId}/updateScore/{playerId}", rock_paper_scissors.updateScore).Methods("POST")
+	r.HandleFunc("/rps/{roomId}/updateScore/{playerId}", rock_paper_scissors.UpdateScore).Methods("POST")
 	r.HandleFunc("/rps/{roomId}/postFig/{playerId}", rock_paper_scissors.PostFigure).Methods("POST")
 	r.HandleFunc("/rps/{roomId}/getFigs", rock_paper_scissors.GetFigures).Methods("GET")
 	r.HandleFunc("/rps/createRoom", rock_paper_scissors.CreateRoom).Methods("POST")

@@ -77,15 +77,13 @@ func GetScores(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode(scores)
 
-<<<<<<< HEAD
+
 	log.Println("GetScores")
-=======
 	log.Printf("GET scores of room %d\n", roomId)
->>>>>>> 81eada86070cbefebace51691bb25e8da00431f9
 }
 
 // Update score
-func updateScore(w http.ResponseWriter, r *http.Request) {
+func UpdateScore(w http.ResponseWriter, r *http.Request) {
 	roomId, _ := strconv.Atoi(mux.Vars(r)["roomId"])
 	playerId, _ := strconv.Atoi(mux.Vars(r)["playerId"])
 
@@ -93,9 +91,9 @@ func updateScore(w http.ResponseWriter, r *http.Request) {
 	var score int
 	_ = json.NewDecoder(r.Body).Decode(&score)
 
-	currentRoom.players[playerId].score = scoreb
+	currentRoom.players[playerId].score = score
 }
 
 func testConn(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Decode("Oh my god! It works!!!!!")
+	json.NewEncoder(w).Encode("Oh my god! It works!!!!!")
 }

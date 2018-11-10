@@ -7,6 +7,7 @@ type gameState struct {
 type player struct {
 	id   int
 	name string
+	score int
 }
 
 type room struct {

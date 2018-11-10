@@ -49,14 +49,10 @@ func CreateRoom(w http.ResponseWriter, r *http.Request) {
 	var data []string
 	err := json.NewDecoder(r.Body).Decode(&data)
 
-<<<<<<< HEAD
-	playersInRoom := []player{{len(players), data[0]}, {len(players) + 1, data[1]}}
-=======
 	if err != nil {
 		log.Println("Something went wrong with json ecoding!!! Call the Hydrauliknotdienst!")
 	} else {
-		playersInRoom := []player{player{len(players), data[0]}, player{len(players) + 1, data[1]}}
->>>>>>> 81eada86070cbefebace51691bb25e8da00431f9
+		playersInRoom := []player{player{len(players), data[0], 0}, player{len(players) + 1, data[1], 0}}
 
 		room := room{len(rooms), playersInRoom, gameState{[]int{0, 0, 0, 0, 0, 0, 0, 0, 0}}}
 		rooms = append(rooms, room)
@@ -70,6 +66,40 @@ func CreateRoom(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(room.id)
 	}
 }
+
+func GetScores(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	roomId, _ := strconv.Atoi(mux.Vars(r)["roomId"])
+
+	playersInRoom := rooms[roomId].players
+	var scores []int
+
+	for _, player := range playersInRoom {
+		scores = append(scores, player.score)
+	}
+
+	json.NewEncoder(w).Encode(scores)
+	
+}
+
+func UpdateScore(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	roomId, _ := strconv.Atoi(mux.Vars(r)["roomId"])
+	playerId, _ := strconv.Atoi(mux.Vars(r)["playerId"])
+
+	currentPlayer := rooms[roomId].players[playerId]
+
+	var newScore int
+	_ = json.NewDecoder(r.Body).Decode(&newScore)
+
+	currentPlayer.score = newScore
+
+}
+
 /*
 // Generate a random 
 func Random(w http.ResponseWriter, r *http.Request) {
@@ -85,10 +115,8 @@ func Random(w http.ResponseWriter, r *http.Request) {
 	}	
 	// fmt.Println(state)
 
-<<<<<<< HEAD
 	fmt.Printf("New room: %v %v\n", room, playersInRoom)
-=======
->>>>>>> 81eada86070cbefebace51691bb25e8da00431f9
+
 
 }
 */
