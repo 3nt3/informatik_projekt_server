@@ -13,7 +13,7 @@ func main() {
 
 	r := mux.NewRouter()	
 	// tic-tac-toe section
-	r.HandleFunc("/tictactoe/{roomId}/getState/{cellId}", tictactoe.GetState).Methods("GET")
+	r.HandleFunc("/tictactoe/{roomId}/getState", tictactoe.GetState).Methods("GET")
 	r.HandleFunc("/tictactoe/{roomId}/updateState", tictactoe.UpdateState).Methods("POST")
 	r.HandleFunc("/tictactoe/createRoom", tictactoe.CreateRoom).Methods("POST")	
 	r.HandleFunc("/tictactoe/{roomId}/getScores", tictactoe.GetScores).Methods("GET")

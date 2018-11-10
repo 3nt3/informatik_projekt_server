@@ -19,15 +19,14 @@ func GetState(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	roomId, _ := strconv.Atoi(mux.Vars(r)["roomId"])
-	cellId, _ := strconv.Atoi(mux.Vars(r)["cellId"])
 
 	room := rooms[roomId]
-	cell := room.state.cells[cellId]
+	cells := room.state.cells
 
 	log.Println(rooms)
-	log.Printf("Get state (room %d, cell %d): %d\n", room.id, cellId, cell)
+	log.Printf("Get state (room %d): %d\n", room.id, cellId, cell)
 
-	_ = json.NewEncoder(w).Encode(cell)
+	_ = json.NewEncoder(w).Encode(cells)
 }
 
 func UpdateState(w http.ResponseWriter, r *http.Request) {
