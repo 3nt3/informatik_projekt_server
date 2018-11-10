@@ -23,7 +23,6 @@ func GetState(w http.ResponseWriter, r *http.Request) {
 	room := rooms[roomId]
 	cells := room.state.cells
 
-	log.Println(rooms)
 	log.Printf("Get state (room %d): %d\n", room.id, cells)
 
 	_ = json.NewEncoder(w).Encode(cells)
