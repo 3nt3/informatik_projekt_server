@@ -32,7 +32,6 @@ func CreateRoom(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// ich bin keine biene ich bin niels ich kann auf diesem thikpad schreiben. ich mag snap! nicht.
 /*
 Post a figure (rock, paper or scissors)
 The chosen figure is encoded like this:

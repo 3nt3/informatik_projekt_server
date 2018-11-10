@@ -50,7 +50,7 @@ func CreateRoom(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&data)
 
 	if err != nil {
-		log.Println("Something went wrong with json ecoding!!! Call the Hydrauliknotdienst!")
+		log.Println("Something went wrong with json decoding!!! Call the Hydrauliknotdienst!")
 	} else {
 		playersInRoom := []player{player{len(players), data[0], 0}, player{len(players) + 1, data[1], 0}}
 
