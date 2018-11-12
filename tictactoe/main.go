@@ -5,8 +5,10 @@ import (
 	"encoding/json"
 	"github.com/gorilla/mux"
 	"log"
+	"math/rand"
 	"net/http"
-	"strconv"	
+	"strconv"
+	"time"
 )
 
 // Global vars
@@ -79,7 +81,7 @@ func GetScores(w http.ResponseWriter, r *http.Request) {
 	}
 
 	json.NewEncoder(w).Encode(scores)
-	
+
 }
 
 func UpdateScore(w http.ResponseWriter, r *http.Request) {
@@ -98,10 +100,11 @@ func UpdateScore(w http.ResponseWriter, r *http.Request) {
 
 }
 
-/*
-// Generate a random 
+// Generate a random state
 func Random(w http.ResponseWriter, r *http.Request) {
 	roomId, _ := strconv.Atoi(mux.Vars(r)["roomId"])
+
+	playersInRoom := rooms[roomId].players
 
 	var state []int
 
@@ -110,11 +113,9 @@ func Random(w http.ResponseWriter, r *http.Request) {
 		r := rand.New(s)
 		x := r.Intn(3)
 		state = append(state, x)
-	}	
+	}
 	// fmt.Println(state)
 
-	fmt.Printf("New room: %v %v\n", room, playersInRoom)
-
+	log.Printf("It's time for some more randomness in room %d %v\n", roomId, playersInRoom)
 
 }
-*/
