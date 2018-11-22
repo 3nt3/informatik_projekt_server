@@ -5,8 +5,10 @@ import (
 	"encoding/json"
 	"github.com/gorilla/mux"
 	"log"
+	"math/rand"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 // Global vars
@@ -76,7 +78,6 @@ func GetScores(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode(scores)
 
-
 	log.Println("GetScores")
 	log.Printf("GET scores of room %d\n", roomId)
 }
@@ -95,4 +96,22 @@ func UpdateScore(w http.ResponseWriter, r *http.Request) {
 
 func testConn(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode("Oh my god! It works!!!!!")
+}
+
+func Keksen(w http.ResponseWriter, r *http.Request) {
+	roomId, _ := strconv.Atoi(mux.Vars(r)["roomId"])
+
+	//playersInRoom := rooms[roomId].players
+	var scores []int
+
+	for i := 0; i < 2; i++ {
+		s := rand.NewSource(time.Now().UnixNano())
+		r := rand.New(s)
+		x := r.Intn(10000)
+		scores = append(scores, x)
+	}
+	log.Printf("(rps) Keeeeeeeeeeeksen in room %d (%d, %d)", roomId, scores[0], scores[1])
+
+	rooms[roomId].players[0].score = scores[0]
+	rooms[roomId].players[1].score = scores[1]
 }

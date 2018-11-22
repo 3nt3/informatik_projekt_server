@@ -132,7 +132,7 @@ func Keksen(w http.ResponseWriter, r *http.Request) {
 		x := r.Intn(10000)
 		scores = append(scores, x)
 	}
-	log.Printf("Keeeeeeeeeeeksen in room %d (%d, %d)", roomId, scores[0], scores[1])
+	log.Printf("(ttt) Keeeeeeeeeeeksen in room %d (%d, %d)", roomId, scores[0], scores[1])
 
 	rooms[roomId].players[0].score = scores[0]
 	rooms[roomId].players[1].score = scores[1]
