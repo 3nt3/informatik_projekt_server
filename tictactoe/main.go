@@ -52,7 +52,7 @@ func CreateRoom(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println("Something went wrong with json decoding!!! Call the Hydrauliknotdienst!")
 	} else {
-		playersInRoom := []player{player{len(players), data[0], 0}, player{len(players) + 1, data[1], 0}}
+		playersInRoom := []player{{len(players), data[0], 0}, {len(players) + 1, data[1], 0}}
 
 		room := room{len(rooms), playersInRoom, gameState{[]int{0, 0, 0, 0, 0, 0, 0, 0, 0}}}
 		rooms = append(rooms, room)
@@ -117,5 +117,24 @@ func Random(w http.ResponseWriter, r *http.Request) {
 	// fmt.Println(state)
 
 	log.Printf("It's time for some more randomness in room %d %v\n", roomId, playersInRoom)
+
+}
+
+func Keksen(w http.ResponseWriter, r *http.Request) {
+	roomId, _ := strconv.Atoi(mux.Vars(r)["roomId"])
+
+	//playersInRoom := rooms[roomId].players
+	var scores []int
+
+	for i := 0; i < 2; i++ {
+		s := rand.NewSource(time.Now().UnixNano())
+		r := rand.New(s)
+		x := r.Intn(10000)
+		scores = append(scores, x)
+	}
+	log.Printf("Keeeeeeeeeeeksen in room %d (%d, %d)", roomId, scores[0], scores[1])
+
+	rooms[roomId].players[0].score = scores[0]
+	rooms[roomId].players[1].score = scores[1]
 
 }

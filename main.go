@@ -2,22 +2,23 @@
 package main
 
 import (
+	"github.com/gorilla/mux"
 	"informatik_projekt_server/rock_paper_scissors"
 	"informatik_projekt_server/tictactoe"
-	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 )
 
 func main() {
 
-	r := mux.NewRouter()	
+	r := mux.NewRouter()
 	// tic-tac-toe section
 	r.HandleFunc("/tictactoe/{roomId}/getState", tictactoe.GetState).Methods("GET")
 	r.HandleFunc("/tictactoe/{roomId}/updateState", tictactoe.UpdateState).Methods("POST")
-	r.HandleFunc("/tictactoe/createRoom", tictactoe.CreateRoom).Methods("POST")	
+	r.HandleFunc("/tictactoe/createRoom", tictactoe.CreateRoom).Methods("POST")
 	r.HandleFunc("/tictactoe/{roomId}/getScores", tictactoe.GetScores).Methods("GET")
 	r.HandleFunc("/tictactoe/{roomId/updateScore/{playerId}", tictactoe.UpdateScore).Methods("POST")
+	r.HandleFunc("/tictactoe/{roomId}/keksen", tictactoe.Keksen).Methods("GET")
 
 	// rock-paper-scissors section
 	r.HandleFunc("/rps/{roomId}/getScores", rock_paper_scissors.GetScores).Methods("GET")
