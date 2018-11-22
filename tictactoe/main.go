@@ -25,7 +25,7 @@ func GetState(w http.ResponseWriter, r *http.Request) {
 	room := rooms[roomId]
 	cells := room.state.cells
 
-	log.Printf("Get state (room %d): %d\n", room.id, cells)
+	log.Printf("(ttt) Get state (room %d): %d\n", room.id, cells)
 
 	_ = json.NewEncoder(w).Encode(cells)
 }
@@ -39,7 +39,7 @@ func UpdateState(w http.ResponseWriter, r *http.Request) {
 	_ = json.NewDecoder(r.Body).Decode(&state)
 
 	rooms[roomId].state = gameState{state}
-	log.Printf("New State for room %d %v\n", roomId, state)
+	log.Printf("(ttt) New State for room %d %v\n", roomId, state)
 }
 
 // Create room
@@ -50,7 +50,7 @@ func CreateRoom(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&data)
 
 	if err != nil {
-		log.Println("Something went wrong with json decoding!!! Call the Hydrauliknotdienst!")
+		log.Println("(ttt) Something went wrong with json decoding!!! Call the Hydrauliknotdienst!")
 	} else {
 		playersInRoom := []player{{len(players), data[0], 0}, {len(players) + 1, data[1], 0}}
 
@@ -61,7 +61,7 @@ func CreateRoom(w http.ResponseWriter, r *http.Request) {
 			players = append(players, player)
 		}
 
-		log.Printf("New room: %v\n", room)
+		log.Printf("(ttt) New room: %v\n", room)
 
 		json.NewEncoder(w).Encode(room.id)
 	}
@@ -116,7 +116,7 @@ func Random(w http.ResponseWriter, r *http.Request) {
 	}
 	// fmt.Println(state)
 
-	log.Printf("It's time for some more randomness in room %d %v\n", roomId, playersInRoom)
+	log.Printf("(ttt) It's time for some more randomness in room %d %v\n", roomId, playersInRoom)
 
 }
 

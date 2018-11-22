@@ -24,11 +24,11 @@ func CreateRoom(w http.ResponseWriter, r *http.Request) {
 	playersInRoom := []player{{len(players), playerNames[0], 0, -1}, {len(players) + 1, playerNames[1], 0, -1}}
 
 	if err != nil {
-		log.Println("Some json error just occurred! Call Bob the builder!!!")
+		log.Println("(rps) Some json error just occurred! Call Bob the builder!!!")
 	} else {
 		room := room{len(rooms), playersInRoom}
 		rooms = append(rooms, room)
-		log.Printf("Added (rps) room: %v\n", room)
+		log.Printf("(rps) Added room: %v\n", room)
 		json.NewEncoder(w).Encode(room.id)
 	}
 
@@ -50,7 +50,7 @@ func PostFigure(w http.ResponseWriter, r *http.Request) {
 
 	rooms[roomId].players[playerId].figure = fig
 
-	log.Printf("Updated fig of player \"%s\" to %d (room %d)\n", rooms[roomId].players[playerId].name, rooms[roomId].players[playerId].figure, roomId)
+	log.Printf("(rps) Updated fig of player \"%s\" to %d (room %d)\n", rooms[roomId].players[playerId].name, rooms[roomId].players[playerId].figure, roomId)
 }
 
 // Get figures in specified room
@@ -64,7 +64,7 @@ func GetFigures(w http.ResponseWriter, r *http.Request) {
 	}
 
 	json.NewEncoder(w).Encode(figs)
-	log.Printf("GET figs of room %d %v -> %d\n", rooms[roomId].id, rooms[roomId].players, figs)
+	log.Printf("(rps) GET figs of room %d %v -> %d\n", rooms[roomId].id, rooms[roomId].players, figs)
 }
 
 // Get score
@@ -78,8 +78,7 @@ func GetScores(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode(scores)
 
-	log.Println("GetScores")
-	log.Printf("GET scores of room %d\n", roomId)
+	log.Printf("(rps) GET scores of room %d\n", roomId)
 }
 
 // Update score
